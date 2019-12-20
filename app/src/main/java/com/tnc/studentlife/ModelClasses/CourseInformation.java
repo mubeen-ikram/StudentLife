@@ -12,6 +12,18 @@ public class CourseInformation  implements Serializable {
     private float classHours;
     private ArrayList<Date> classDates=new ArrayList<>();
 
+    public CourseInformation() {
+    }
+
+    public CourseInformation(CourseInformation courseInformation) {
+        this.notes= (ArrayList<NoteInformation>) courseInformation.getNotes().clone();
+        this.coarseName=courseInformation.getCoarseName();
+        this.creditHours=courseInformation.getCreditHours();
+        this.classHours=courseInformation.getClassHours();
+        this.instructorName=courseInformation.instructorName;
+        this.classDates= (ArrayList<Date>) courseInformation.getClassDates().clone();
+    }
+
 
     public ArrayList<NoteInformation> getNotes() {
         return notes;

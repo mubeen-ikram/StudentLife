@@ -9,7 +9,7 @@ public class PersonInformation  implements Serializable {
     private String userUniversity;
     private Float userAge;
     private String userBatch;
-    private ArrayList<CourseInformation> currentCourses;
+    private ArrayList<CourseInformation> currentCourses=new ArrayList<>();
 
 
     public String getUserName() {

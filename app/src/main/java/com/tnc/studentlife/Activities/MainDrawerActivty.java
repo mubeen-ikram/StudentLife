@@ -20,7 +20,9 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.tnc.studentlife.Fragments.HomeFragment;
+import com.tnc.studentlife.ModelClasses.CourseInformation;
 import com.tnc.studentlife.R;
+import com.tnc.studentlife.StaticClass.AppAvailableData;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -69,7 +71,6 @@ public class MainDrawerActivty extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void checkFragment() {
-
         if(navController.getCurrentDestination().getId()==R.id.nav_home){
             showAddCourseDialogue();
         }
@@ -88,9 +89,36 @@ public class MainDrawerActivty extends AppCompatActivity {
         courseHoursEt=customLayout.findViewById(R.id.courseHoursET);
         makeCourse=customLayout.findViewById(R.id.createCourseBtn);
         builder.setView(customLayout);
-        AlertDialog dialog = builder.create();
+        final AlertDialog dialog = builder.create();
         dialog.show();
+        makeCourse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(courseNameET.getText().toString().equals("")){
+                    courseNameET.setError("Please Enter course  Name");
+                    return;
+                }
+                if(courseInstructorEt.getText().toString().equals("")){
+                    courseInstructorEt.setError("Please Enter Instructor  Name");
+                    return;
+                }
+                if(courseHoursEt.getText().toString().equals("")){
+                    courseHoursEt.setError("Please Enter Course Hours");
+                    return;
+                }
+                CourseInformation extraCourse=new CourseInformation();
+                extraCourse.setCoarseName(courseNameET.getText().toString());
+                extraCourse.setInstructorName(courseInstructorEt.getText().toString());
+                extraCourse.setClassHours(Float.valueOf(courseHoursEt.getText().toString()));
+                extraCourse.setCreditHours(3);
+                AppAvailableData.userInformation.getCurrentCourses().add(extraCourse);
+                navController.navigate(R.id.nav_home);
+                dialog.dismiss();
+            }
+        });
+
     }
+
 
 
     @Override
