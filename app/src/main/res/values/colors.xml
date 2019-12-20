@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <color name="colorPrimary">#302F2F</color>
+    <color name="colorPrimaryDark">#302F2F</color>
+    <color name="colorAccent">#A7A5A5</color>
+    <color name="colorCourseName">#868686</color>
+    <color name="colorNotesData">#D1BDBD</color>
+    <color name="colorWhite">#FFF7F7</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorNotesBackground">#A7A5A5</color>
+    <color name="colorCardBackground">#141313</color>
+    <color name="colorLineGray">#9E9B9B</color>
+
 </resources>

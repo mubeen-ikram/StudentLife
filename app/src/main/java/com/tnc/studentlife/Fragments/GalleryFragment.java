@@ -1,4 +1,4 @@
-package com.tnc.studentlife.Activities.ui.gallery;
+package com.tnc.studentlife.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.tnc.studentlife.Activities.ui.gallery.GalleryViewModel;
 import com.tnc.studentlife.R;
 
 

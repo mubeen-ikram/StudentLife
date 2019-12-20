@@ -1,4 +1,4 @@
-package com.tnc.studentlife.Activities.ui.send;
+package com.tnc.studentlife.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,19 +12,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.tnc.studentlife.Activities.ui.tools.ToolsViewModel;
 import com.tnc.studentlife.R;
 
-public class SendFragment extends Fragment {
+public class ToolsFragment extends Fragment {
 
-    private SendViewModel sendViewModel;
+    private ToolsViewModel toolsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        sendViewModel =
-                ViewModelProviders.of(this).get(SendViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_send, container, false);
-        final TextView textView = root.findViewById(R.id.text_send);
-        sendViewModel.getText().observe(this, new Observer<String>() {
+        toolsViewModel =
+                ViewModelProviders.of(this).get(ToolsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_tools, container, false);
+        final TextView textView = root.findViewById(R.id.text_tools);
+        toolsViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

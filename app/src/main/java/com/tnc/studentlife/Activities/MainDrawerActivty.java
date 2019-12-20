@@ -1,5 +1,8 @@
 package com.tnc.studentlife.Activities;
 
+import android.app.Fragment;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -7,12 +10,16 @@ import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.tnc.studentlife.Fragments.HomeFragment;
 import com.tnc.studentlife.R;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -21,11 +28,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainDrawerActivty extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-
+    EditText courseNameET,courseInstructorEt,courseHoursEt;
+    Button makeCourse;
+    NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +46,10 @@ public class MainDrawerActivty extends AppCompatActivity {
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                checkFragment();
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -49,10 +61,37 @@ public class MainDrawerActivty extends AppCompatActivity {
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send)
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void checkFragment() {
+
+        if(navController.getCurrentDestination().getId()==R.id.nav_home){
+            showAddCourseDialogue();
+        }
+        else{
+            Toast.makeText(MainDrawerActivty.this,"Your are not at home fragment",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void showAddCourseDialogue() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(MainDrawerActivty.this);
+        final View customLayout = getLayoutInflater().inflate(R.layout.add_course_dialoguebox, null);
+//        customLayout.setBackground(getDrawable(R.color.colorCardBackground));
+        courseNameET=customLayout.findViewById(R.id.courseNameET);
+        courseInstructorEt=customLayout.findViewById(R.id.courseInstructorET);
+        courseHoursEt=customLayout.findViewById(R.id.courseHoursET);
+        makeCourse=customLayout.findViewById(R.id.createCourseBtn);
+        builder.setView(customLayout);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
