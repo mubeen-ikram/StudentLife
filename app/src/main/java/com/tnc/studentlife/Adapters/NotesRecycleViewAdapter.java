@@ -15,6 +15,7 @@ import com.tnc.studentlife.Activities.CourseDetailActivity;
 import com.tnc.studentlife.ModelClasses.CourseInformation;
 import com.tnc.studentlife.ModelClasses.NoteInformation;
 import com.tnc.studentlife.R;
+import com.tnc.studentlife.StaticClass.SData;
 
 import java.util.ArrayList;
 
@@ -37,14 +38,14 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NotesRecycleViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NotesRecycleViewAdapter.MyViewHolder holder, final int position) {
         final CourseInformation current=currentCourses.get(position);
         holder.courseName.setText(current.getCoarseName());
         String notesToShow="";
         if(current.getNotes()!=null){
             for(NoteInformation note:current.getNotes()){
                 if(note.getParentId()==0){
-                    notesToShow=notesToShow+note.getNotesData();
+                    notesToShow=notesToShow+note.getNotesData()+"\n";
                     notesToShow=checkChild(note.getCurrentNoteId(),current,notesToShow,0);
                 }
                 
@@ -57,6 +58,7 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
             public void onClick(View view) {
                 Intent intent=new Intent(context, CourseDetailActivity.class);
                 intent.putExtra(context.getString(R.string.selectedCourse),current);
+                SData.currentCourse=position;
                 context.startActivity(intent);
             }
         });
@@ -72,7 +74,7 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         }
         for(NoteInformation notes:current.getNotes()){
             if(notes.getParentId()==currentNoteId){
-                notesToShow=notesToShow+"\n"+appendString+notes.getNotesData();
+                notesToShow=notesToShow+appendString+notes.getNotesData()+"\n";
                 notesToShow=checkChild(notes.getCurrentNoteId(),current,notesToShow,heirarchy+1);
             }
         }

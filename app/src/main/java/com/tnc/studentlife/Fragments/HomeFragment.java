@@ -4,27 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.tnc.studentlife.Activities.ui.home.HomeViewModel;
 import com.tnc.studentlife.Adapters.NotesRecycleViewAdapter;
-import com.tnc.studentlife.ModelClasses.CourseInformation;
-import com.tnc.studentlife.ModelClasses.NoteInformation;
 import com.tnc.studentlife.R;
-import com.tnc.studentlife.StaticClass.AppAvailableData;
-
-import java.util.ArrayList;
+import com.tnc.studentlife.StaticClass.SData;
 
 public class HomeFragment extends Fragment {
     RecyclerView notesRecycleView;
@@ -55,7 +44,7 @@ public class HomeFragment extends Fragment {
 //        notesRecycleView.setLayoutManager(layoutManager);
 //        notesRecycleView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         notesRecycleView.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
-        NotesRecycleViewAdapter mycourseAdapter= new NotesRecycleViewAdapter(getContext(), R.layout.notes_approve_card, AppAvailableData.userInformation.getCurrentCourses());
+        NotesRecycleViewAdapter mycourseAdapter= new NotesRecycleViewAdapter(getContext(), R.layout.notes_approve_card, SData.userInformation.getCurrentCourses());
         notesRecycleView.setAdapter(mycourseAdapter);
 
     }

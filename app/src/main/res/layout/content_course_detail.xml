@@ -4,9 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.CourseDetailActivity"
-    android:orientation="horizontal"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
     tools:showIn="@layout/activity_course_detail">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <EditText
+            android:shadowColor="@android:color/transparent"
+            android:textSize="20dp"
+            android:hint="Course Name"
+            android:textColorHint="@color/colorLineGray"
+            android:background="@drawable/edittext_background"
+            style="@style/EditTextStyleBlack"
+            android:id="@+id/courseDetailName"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_options_24dp"
+            android:id="@+id/moreCourseOptions"
+            android:layout_weight="9"
+            />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailNotesRecycleView"/>
+
 
 </LinearLayout>

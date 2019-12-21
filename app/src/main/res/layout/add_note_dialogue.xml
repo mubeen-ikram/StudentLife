@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBlack"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="10dp"
+        android:padding="20dp"
+        app:cardBackgroundColor="@color/colorCardBackground"
+        android:elevation="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:shadowColor="@android:color/transparent"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:hint="Note Data"
+                android:textColorHint="@color/colorLineGray"
+                android:background="@drawable/edittext_background"
+                style="@style/EditTextStyleBlack"
+                android:id="@+id/noteDataET"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/parentNoteSpinner"
+                android:background="@drawable/edittext_background"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                style="@style/EditTextStyleBlack"
+                />
+
+            <Button
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:text="Add"
+                android:textColor="@color/colorLineGray"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_background"
+                android:id="@+id/createNoteBtn"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

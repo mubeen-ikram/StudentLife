@@ -1,28 +1,24 @@
 package com.tnc.studentlife.Activities;
 
-import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
+import android.view.KeyEvent;
 import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
-import com.tnc.studentlife.Fragments.HomeFragment;
 import com.tnc.studentlife.ModelClasses.CourseInformation;
 import com.tnc.studentlife.R;
-import com.tnc.studentlife.StaticClass.AppAvailableData;
+import com.tnc.studentlife.StaticClass.SData;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -63,6 +59,8 @@ public class MainDrawerActivty extends AppCompatActivity {
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send)
                 .setDrawerLayout(drawer)
                 .build();
+        SData.setMyPreference(getApplicationContext());
+        SData.getFromFile();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -111,7 +109,8 @@ public class MainDrawerActivty extends AppCompatActivity {
                 extraCourse.setInstructorName(courseInstructorEt.getText().toString());
                 extraCourse.setClassHours(Float.valueOf(courseHoursEt.getText().toString()));
                 extraCourse.setCreditHours(3);
-                AppAvailableData.userInformation.getCurrentCourses().add(extraCourse);
+                SData.userInformation.getCurrentCourses().add(extraCourse);
+                SData.SaveToFile();
                 navController.navigate(R.id.nav_home);
                 dialog.dismiss();
             }

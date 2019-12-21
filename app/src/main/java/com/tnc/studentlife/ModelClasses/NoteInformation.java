@@ -6,7 +6,15 @@ public class NoteInformation implements Serializable {
     private String notesData;
     private int currentNoteId;
     private int parentId;
+    private int position;
 
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     public int getCurrentNoteId() {
         return currentNoteId;
