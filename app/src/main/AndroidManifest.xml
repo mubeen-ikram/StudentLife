@@ -10,15 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight">
         <activity
-            android:name=".Activities.LectureSelectAcitivty"
-            android:label="@string/title_activity_lecture_select_acitivty"
-            android:theme="@style/NoActionBar"></activity>
-        <activity
             android:name=".Activities.CourseDetailActivity"
             android:label="@string/title_activity_course_detail"
             android:theme="@style/NoActionBar" />
         <activity
-            android:name=".Activities.MainDrawerActivty"
+            android:name=".Activities.MainDrawerActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

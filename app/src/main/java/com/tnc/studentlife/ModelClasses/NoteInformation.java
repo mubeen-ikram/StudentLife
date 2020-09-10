@@ -4,24 +4,23 @@ import java.io.Serializable;
 
 public class NoteInformation implements Serializable {
     private String notesData;
-    private int currentNoteId;
-    private int parentId;
-    private int position;
+    private int verticalPosition=-1;
+    private int horizontalPosition=-1;
 
-    public int getPosition() {
-        return position;
+    public int getHorizontalPosition() {
+        return horizontalPosition;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
+    public void setHorizontalPosition(int horizontalPosition) {
+        this.horizontalPosition = horizontalPosition;
     }
 
-    public int getCurrentNoteId() {
-        return currentNoteId;
+    public int getVerticalPosition() {
+        return verticalPosition;
     }
 
-    public void setCurrentNoteId(int currentNoteId) {
-        this.currentNoteId = currentNoteId;
+    public void setVerticalPosition(int verticalPosition) {
+        this.verticalPosition = verticalPosition;
     }
 
     public String getNotesData() {
@@ -32,11 +31,4 @@ public class NoteInformation implements Serializable {
         this.notesData = notesData;
     }
 
-    public int getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
-    }
 }

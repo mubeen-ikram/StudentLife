@@ -48,10 +48,10 @@ public class NoteRecycleAdapter extends RecyclerView.Adapter<NoteRecycleAdapter.
         final Boolean[] check = {false};
         final NoteInformation note = notes.get(position);
         holder.noteDataET.setText(note.getNotesData());
-        holder.childNotes.setPadding(30 * note.getPosition()+1, 10, 0, 0);
+        holder.childNotes.setPadding(30 * note.getHorizontalPosition()+1, 10, 0, 0);
         ArrayList<NoteInformation> childNotes=new ArrayList<>();
-        for(NoteInformation child:SData.userInformation.getCurrentCourses().get(SData.currentCourse).getNotes()){
-            if(child.getParentId()==note.getCurrentNoteId()){
+        for(NoteInformation child:SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes()){
+            if(child.getVerticalPosition()==note.getVerticalPosition()){
                 childNotes.add(child);
             }
         }
@@ -74,7 +74,7 @@ public class NoteRecycleAdapter extends RecyclerView.Adapter<NoteRecycleAdapter.
                     isShow=true;
                     holder.showHide.setImageResource(R.drawable.ic_show_24dp);
                     holder.childNotes.setVisibility(View.VISIBLE);
-                    holder.childNotes.setPadding(30 * note.getPosition()+1, 10, 0, 0);
+                    holder.childNotes.setPadding(30 * note.getHorizontalPosition()+1, 10, 0, 0);
                 }
             }
         });
@@ -86,7 +86,7 @@ public class NoteRecycleAdapter extends RecyclerView.Adapter<NoteRecycleAdapter.
                 checkToDeleteChild(note);
                 deleteRemove();
                 notes.remove(note);
-                SData.userInformation.getCurrentCourses().get(SData.currentCourse).getNotes().remove(note);
+                SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes().remove(note);
                 SData.SaveToFile();
                 NoteRecycleAdapter.this.notifyDataSetChanged();
             }
@@ -98,7 +98,7 @@ public class NoteRecycleAdapter extends RecyclerView.Adapter<NoteRecycleAdapter.
                     check[0] = false;
                     if (!note.getNotesData().equals(holder.noteDataET.getText().toString())) {
                         note.setNotesData(holder.noteDataET.getText().toString());
-                        SData.userInformation.getCurrentCourses().get(SData.currentCourse).getNotes().set(position, note);
+                        SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes().set(position, note);
                         SData.SaveToFile();
                     }
                     holder.deleteNote.setVisibility(View.INVISIBLE);
@@ -117,7 +117,7 @@ public class NoteRecycleAdapter extends RecyclerView.Adapter<NoteRecycleAdapter.
                 if (i == KeyEvent.KEYCODE_ENTER) {
                     Toast.makeText(context, "Enter was pressed", Toast.LENGTH_SHORT).show();
                     if (!note.getNotesData().equals(holder.noteDataET.getText().toString())) {
-                        for(NoteInformation currentNote:SData.userInformation.getCurrentCourses().get(SData.currentCourse).getNotes()){
+                        for(NoteInformation currentNote:SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes()){
                             if(note==currentNote){
                                 currentNote.setNotesData(holder.noteDataET.getText().toString());
                             }
@@ -134,13 +134,13 @@ public class NoteRecycleAdapter extends RecyclerView.Adapter<NoteRecycleAdapter.
 
     private void deleteRemove() {
         for(NoteInformation currentNote:toRemove){
-            SData.userInformation.getCurrentCourses().get(SData.currentCourse).getNotes().remove(currentNote);
+            SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes().remove(currentNote);
         }
     }
 
     private void checkToDeleteChild(NoteInformation note) {
-        for(NoteInformation Note:SData.userInformation.getCurrentCourses().get(SData.currentCourse).getNotes()){
-            if(Note.getParentId()==note.getCurrentNoteId())
+        for(NoteInformation Note:SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes()){
+            if(Note.getVerticalPosition()==note.getVerticalPosition())
             {
                 checkToDeleteChild(Note);
                 toRemove.add(Note);

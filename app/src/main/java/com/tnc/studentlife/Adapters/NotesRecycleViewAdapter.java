@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tnc.studentlife.Activities.CourseDetailActivity;
+import com.tnc.studentlife.ModelClasses.CompleteNotes;
 import com.tnc.studentlife.ModelClasses.CourseInformation;
 import com.tnc.studentlife.ModelClasses.NoteInformation;
 import com.tnc.studentlife.R;
@@ -33,8 +34,8 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
     @NonNull
     @Override
     public NotesRecycleViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View myview = LayoutInflater.from(parent.getContext()).inflate(resources, parent, false);
-        return new NotesRecycleViewAdapter.MyViewHolder(myview);
+        View myView = LayoutInflater.from(parent.getContext()).inflate(resources, parent, false);
+        return new MyViewHolder(myView);
     }
 
     @Override
@@ -42,11 +43,13 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         final CourseInformation current=currentCourses.get(position);
         holder.courseName.setText(current.getCoarseName());
         String notesToShow="";
+        CompleteNotes completeNotes= new CompleteNotes();
+        completeNotes.setCurrentNotes(current.getNotes().getCurrentNotes());
         if(current.getNotes()!=null){
-            for(NoteInformation note:current.getNotes()){
-                if(note.getParentId()==0){
+            for(NoteInformation note:completeNotes.getCurrentNotes()){
+                if(note.getHorizontalPosition()==0){
                     notesToShow=notesToShow+note.getNotesData()+"\n";
-                    notesToShow=checkChild(note.getCurrentNoteId(),current,notesToShow,0);
+                    notesToShow=checkChild(note.getVerticalPosition(),current,notesToShow,completeNotes,0);
                 }
                 
             }
@@ -58,7 +61,7 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
             public void onClick(View view) {
                 Intent intent=new Intent(context, CourseDetailActivity.class);
                 intent.putExtra(context.getString(R.string.selectedCourse),current);
-                SData.currentCourse=position;
+                SData.setCurrentCourse(position);
                 context.startActivity(intent);
             }
         });
@@ -67,15 +70,15 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
 
     }
 
-    private String checkChild(int currentNoteId, CourseInformation current, String notesToShow, int heirarchy) {
+    private String checkChild(int currentNoteId, CourseInformation current, String notesToShow, CompleteNotes completeNotes, int heirarchy) {
         String appendString="";
         for(int x=0;x<=heirarchy;x++){
             appendString=appendString+"|\t"+"\t";
         }
-        for(NoteInformation notes:current.getNotes()){
-            if(notes.getParentId()==currentNoteId){
+        for(NoteInformation notes:completeNotes.getChild(completeNotes.getCurrentNotes().get(currentNoteId))){
+            {
                 notesToShow=notesToShow+appendString+notes.getNotesData()+"\n";
-                notesToShow=checkChild(notes.getCurrentNoteId(),current,notesToShow,heirarchy+1);
+                notesToShow=checkChild(notes.getVerticalPosition(),current,notesToShow, completeNotes, heirarchy+1);
             }
         }
         return notesToShow;
@@ -86,7 +89,7 @@ public class NotesRecycleViewAdapter extends RecyclerView.Adapter<NotesRecycleVi
         return currentCourses.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView courseName;
         TextView courseNote;
         LinearLayout linearLayout;

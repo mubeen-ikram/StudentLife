@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class CourseInformation  implements Serializable {
-    private ArrayList<NoteInformation> notes=new ArrayList<>();
+    private CompleteNotes notes=new CompleteNotes();
     private String coarseName;
     private float creditHours;
     private String instructorName;
@@ -16,7 +16,7 @@ public class CourseInformation  implements Serializable {
     }
 
     public CourseInformation(CourseInformation courseInformation) {
-        this.notes= (ArrayList<NoteInformation>) courseInformation.getNotes().clone();
+        this.notes= courseInformation.getNotes();
         this.coarseName=courseInformation.getCoarseName();
         this.creditHours=courseInformation.getCreditHours();
         this.classHours=courseInformation.getClassHours();
@@ -25,11 +25,11 @@ public class CourseInformation  implements Serializable {
     }
 
 
-    public ArrayList<NoteInformation> getNotes() {
+    public CompleteNotes getNotes() {
         return notes;
     }
 
-    public void setNotes(ArrayList<NoteInformation> notes) {
+    public void setNotes(CompleteNotes notes) {
         this.notes = notes;
     }
 

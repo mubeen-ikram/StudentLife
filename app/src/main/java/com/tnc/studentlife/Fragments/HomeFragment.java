@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
 //        notesRecycleView.setLayoutManager(layoutManager);
 //        notesRecycleView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         notesRecycleView.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
-        NotesRecycleViewAdapter mycourseAdapter= new NotesRecycleViewAdapter(getContext(), R.layout.notes_approve_card, SData.userInformation.getCurrentCourses());
+        NotesRecycleViewAdapter mycourseAdapter= new NotesRecycleViewAdapter(getContext(), R.layout.notes_approve_card, SData.getUserInformation().getCurrentCourses());
         notesRecycleView.setAdapter(mycourseAdapter);
 
     }

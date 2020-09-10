@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import android.view.KeyEvent;
 import android.view.View;
 
 import androidx.annotation.RequiresApi;
@@ -30,7 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MainDrawerActivty extends AppCompatActivity {
+public class MainDrawerActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     EditText courseNameET,courseInstructorEt,courseHoursEt;
@@ -73,15 +72,14 @@ public class MainDrawerActivty extends AppCompatActivity {
             showAddCourseDialogue();
         }
         else{
-            Toast.makeText(MainDrawerActivty.this,"Your are not at home fragment",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainDrawerActivity.this,"Your are not at home fragment",Toast.LENGTH_LONG).show();
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void showAddCourseDialogue() {
-        AlertDialog.Builder builder=new AlertDialog.Builder(MainDrawerActivty.this);
+        AlertDialog.Builder builder=new AlertDialog.Builder(MainDrawerActivity.this);
         final View customLayout = getLayoutInflater().inflate(R.layout.add_course_dialoguebox, null);
-//        customLayout.setBackground(getDrawable(R.color.colorCardBackground));
         courseNameET=customLayout.findViewById(R.id.courseNameET);
         courseInstructorEt=customLayout.findViewById(R.id.courseInstructorET);
         courseHoursEt=customLayout.findViewById(R.id.courseHoursET);
@@ -109,7 +107,7 @@ public class MainDrawerActivty extends AppCompatActivity {
                 extraCourse.setInstructorName(courseInstructorEt.getText().toString());
                 extraCourse.setClassHours(Float.valueOf(courseHoursEt.getText().toString()));
                 extraCourse.setCreditHours(3);
-                SData.userInformation.getCurrentCourses().add(extraCourse);
+                SData.getUserInformation().getCurrentCourses().add(extraCourse);
                 SData.SaveToFile();
                 navController.navigate(R.id.nav_home);
                 dialog.dismiss();
