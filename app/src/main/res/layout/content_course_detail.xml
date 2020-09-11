@@ -37,18 +37,18 @@
             android:layout_weight="9"
             />
     </LinearLayout>
-    <EditText
-        android:shadowColor="@android:color/transparent"
-        android:textSize="20dp"
-        android:hint="+ Add New Note"
-        android:textColorHint="@color/colorLineGray"
-        android:background="@drawable/edittext_background"
-        style="@style/EditTextStyleBlack"
-        android:id="@+id/NewList"
-        android:inputType="text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+<!--    <EditText-->
+<!--        android:shadowColor="@android:color/transparent"-->
+<!--        android:textSize="20dp"-->
+<!--        android:hint="+ Add New Note"-->
+<!--        android:textColorHint="@color/colorLineGray"-->
+<!--        android:background="@drawable/edittext_background"-->
+<!--        style="@style/EditTextStyleBlack"-->
+<!--        android:id="@+id/NewList"-->
+<!--        android:inputType="text"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        />-->
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"

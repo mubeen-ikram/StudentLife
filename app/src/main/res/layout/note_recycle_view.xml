@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorBlack"
+        android:id="@+id/currentNotesLayout"
         android:orientation="horizontal">
 
         <ImageView
@@ -17,6 +18,13 @@
             android:layout_weight="1"
             android:src="@drawable/ic_show_24dp"
             android:visibility="invisible" />
+        <ImageView
+            android:id="@+id/makeCurrentChild"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_make_child"
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/showNoteDataET"
@@ -25,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:background="@drawable/edittext_background"
-            android:inputType="textMultiLine"
+            android:inputType="textShortMessage"
             android:shadowColor="@android:color/transparent"
             android:textColor="@color/colorWhite" />
 
@@ -38,9 +46,16 @@
             android:visibility="invisible" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/child_notes_recycleview"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Add New Element"
+        android:visibility="gone"
+        android:id="@+id/addNote" />
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/child_notes_recycleview"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
 
 </LinearLayout>

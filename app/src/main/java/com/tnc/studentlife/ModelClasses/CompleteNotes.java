@@ -1,8 +1,9 @@
 package com.tnc.studentlife.ModelClasses;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CompleteNotes {
+public class CompleteNotes implements Serializable {
     private ArrayList<NoteInformation> currentNotes=new ArrayList<>();
     //Different method on these notes
 
@@ -47,7 +48,7 @@ public class CompleteNotes {
         for(int x=parentNode.getVerticalPosition()+1;x<currentNotes.size();x++){
             if(parentNode.getHorizontalPosition()==currentNotes.get(x).getHorizontalPosition())
                 break;
-            if (parentNode.getHorizontalPosition()==currentNotes.get(x).getHorizontalPosition()+1){
+            if (parentNode.getHorizontalPosition()+1==currentNotes.get(x).getHorizontalPosition()){
                 childNotes.add(currentNotes.get(x));
             }
         }
@@ -59,7 +60,7 @@ public class CompleteNotes {
 
 
     private void updateChildIndex(NoteInformation note){
-        for(int x=note.getVerticalPosition()-1;x<currentNotes.size();x++){
+        for(int x=note.getVerticalPosition();x<currentNotes.size();x++){
             currentNotes.get(x).setVerticalPosition(currentNotes.get(x).getVerticalPosition()+1);
         }
         currentNotes.add(note.getVerticalPosition(),note);

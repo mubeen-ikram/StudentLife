@@ -19,6 +19,7 @@ import android.widget.Spinner;
 
 import com.tnc.studentlife.Adapters.NoteRecycleAdapter;
 import com.tnc.studentlife.Adapters.SpinnerAdapter;
+import com.tnc.studentlife.Interfaces.NotesChangedInterface;
 import com.tnc.studentlife.ModelClasses.NoteInformation;
 import com.tnc.studentlife.ModelClasses.PersonInformation;
 import com.tnc.studentlife.R;
@@ -29,12 +30,13 @@ import java.util.Objects;
 
 //import static com.tnc.studentlife.StaticClass.SData.userInformation;
 
-public class CourseDetailActivity extends AppCompatActivity {
-    EditText courseName, noteDataET,addNewNote;
+public class CourseDetailActivity extends AppCompatActivity implements NotesChangedInterface {
+    EditText courseName, noteDataET;
     ImageView courseOptions;
     Spinner noteParentSpinner;
     RecyclerView notesDetails;
     Button createNote;
+    Boolean addDefaultNote;
     ArrayList<NoteInformation> notesToShow;
     PersonInformation userInformation;
     @Override
@@ -57,8 +59,8 @@ public class CourseDetailActivity extends AppCompatActivity {
 
     private void setValues() {
         courseName.setText(userInformation.getCurrentCourses().get(SData.getCurrentCourse()).getCoarseName());
-
         updateView();
+
     }
 
 
@@ -69,7 +71,6 @@ public class CourseDetailActivity extends AppCompatActivity {
     private void showAddDialogue() {
         AlertDialog.Builder builder = new AlertDialog.Builder(CourseDetailActivity.this);
         final View customLayout = getLayoutInflater().inflate(R.layout.add_note_dialogue, null);
-//        customLayout.setBackground(getDrawable(R.color.colorCardBackground));
         noteDataET = customLayout.findViewById(R.id.noteDataET);
         noteParentSpinner = customLayout.findViewById(R.id.parentNoteSpinner);
         fillSpinner();
@@ -105,8 +106,6 @@ public class CourseDetailActivity extends AppCompatActivity {
                 }
                 nextNote.setVerticalPosition(currentId);
                 sortNotes(nextNote);
-
-//                userInformation.getCurrentCourses().get(SData.currentCourse).getNotes().add(nextNote);
                 SData.SaveToFile();
                 updateView();
                 dialog.dismiss();
@@ -128,19 +127,28 @@ public class CourseDetailActivity extends AppCompatActivity {
 
 
     private void updateView() {
-        setInitialNotes();
+        if (SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes().size()<1){
+//            NoteInformation startingNote=new NoteInformation();
+//            startingNote.setNotesData("+ Add New Element");
+//            startingNote.setVerticalPosition(0);
+//            startingNote.setHorizontalPosition(0);
+//            notesToShow.add(startingNote);
+            addDefaultNote=true;
+        }
+        else{
+            addDefaultNote=false;
+        }
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CourseDetailActivity.this);
         notesDetails.setHasFixedSize(true);
         notesDetails.setLayoutManager(layoutManager);
         NoteRecycleAdapter mycourseAdapter = new NoteRecycleAdapter(this, R.layout.note_recycle_view,
-                notesToShow);
+                SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes(),addDefaultNote);
         notesDetails.setAdapter(mycourseAdapter);
     }
 
     private void setInitialNotes() {
         notesToShow=new ArrayList<>();
         for(NoteInformation current:userInformation.getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes()){
-//            if(current.getParentId()==0)
             if(current.getHorizontalPosition()==0)
                 notesToShow.add(current);
         }
@@ -163,7 +171,10 @@ public class CourseDetailActivity extends AppCompatActivity {
         courseOptions = findViewById(R.id.moreCourseOptions);
         notesDetails = findViewById(R.id.detailNotesRecycleView);
         userInformation=SData.getUserInformation();
-        addNewNote=findViewById(R.id.NewList);
     }
 
+    @Override
+    public void dataChanged() {
+        updateView();
+    }
 }
