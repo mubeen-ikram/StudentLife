@@ -55,8 +55,18 @@ public class CompleteNotes implements Serializable {
         return childNotes;
     }
 
+    public ArrayList<NoteInformation> getAllChild(NoteInformation parentNode){
+        ArrayList<NoteInformation> childNotes=new ArrayList<>();
+        getAllInternalChild(parentNode,childNotes);
+        return childNotes;
+    }
 
-
+    private void getAllInternalChild(NoteInformation parentNode, ArrayList<NoteInformation> childNotes) {
+        for(NoteInformation note:this.getChild(parentNode)) {
+            childNotes.add(note);
+            getAllInternalChild(note, childNotes);
+        }
+    }
 
 
     private void updateChildIndex(NoteInformation note){

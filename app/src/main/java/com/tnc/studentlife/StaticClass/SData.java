@@ -27,7 +27,7 @@ public class SData {
         for (CourseInformation course : userInformation.getCurrentCourses()) {
             json.append("{").append("courseName=\"").append(course.getCoarseName()).append("\",instructorName=\"").append(course.getInstructorName()).append("\",courseHours=\"").append(course.getClassHours()).append("\",courseNotes=[");
             for (NoteInformation note : course.getNotes().getCurrentNotes()) {
-                json.append("{").append("noteData=\"").append(note.getNotesData()).append("\",noteVerticalPosition=\"").append(note.getVerticalPosition()).append("\",noteHorizontalPosition=\"").append(note.getHorizontalPosition()).append("\"}");
+                json.append("{").append("noteData=\"").append(note.getNotesData()).append("\",noteVerticalPosition=\"").append(note.getVerticalPosition()).append("\",noteHorizontalPosition=\"").append(note.getHorizontalPosition()).append("\",isShow=\"").append(note.isShow()).append("\"}");
                 if (note != course.getNotes().getCurrentNotes().get(course.getNotes().getCurrentNotes().size() - 1)) {
                     json.append(',');
                 }
@@ -65,6 +65,7 @@ public class SData {
                         note.setNotesData(noteJson.getString("noteData"));
                         note.setHorizontalPosition(Integer.parseInt(noteJson.getString("noteHorizontalPosition")));
                         note.setVerticalPosition(Integer.parseInt(noteJson.getString("noteVerticalPosition")));
+                        note.setShow(Boolean.parseBoolean(noteJson.getString("isShow")));
                         crs.getNotes().getCurrentNotes().add(note);
                     }
                     userInformation.getCurrentCourses().add(crs);

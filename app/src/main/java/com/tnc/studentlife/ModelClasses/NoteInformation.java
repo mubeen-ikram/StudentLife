@@ -6,6 +6,8 @@ public class NoteInformation implements Serializable {
     private String notesData;
     private int verticalPosition=-1;
     private int horizontalPosition=-1;
+    private boolean isShow=true;
+
 
     public int getHorizontalPosition() {
         return horizontalPosition;
@@ -31,4 +33,12 @@ public class NoteInformation implements Serializable {
         this.notesData = notesData;
     }
 
+
+    public boolean isShow() {
+        return isShow;
+    }
+
+    public void setShow(boolean show) {
+        isShow = show;
+    }
 }
