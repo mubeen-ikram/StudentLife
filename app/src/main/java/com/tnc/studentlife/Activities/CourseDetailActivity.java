@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -159,6 +160,7 @@ public class CourseDetailActivity extends AppCompatActivity implements NotesChan
 
 
     private void updateView() {
+        notesDetails.setAdapter(null);
         notesToShow=new ArrayList<>();
         if (SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes().size()<1){
             addDefaultNote=true;
@@ -169,17 +171,24 @@ public class CourseDetailActivity extends AppCompatActivity implements NotesChan
         for(NoteInformation note:SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes()){
             if (note.isShow())
                 notesToShow.add(note);
+//            if (note.isShow()) {
+//                try {
+//                    notesToShow.add((NoteInformation) note.clone());
+//                } catch (CloneNotSupportedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
         }
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(CourseDetailActivity.this);
         notesDetails.setHasFixedSize(true);
         notesDetails.setLayoutManager(layoutManager);
-        NoteRecycleAdapter mycourseAdapter = new NoteRecycleAdapter(this, R.layout.note_recycle_view,
+        NoteRecycleAdapter myCourseAdapter = new NoteRecycleAdapter(this, R.layout.note_recycle_view,
                 notesToShow,addDefaultNote);
         ItemTouchHelper.Callback callback =
-                new SimpleItemTouchHelperCallback(mycourseAdapter);
+                new SimpleItemTouchHelperCallback(myCourseAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(notesDetails);
-        notesDetails.setAdapter(mycourseAdapter);
+        notesDetails.setAdapter(myCourseAdapter);
 
     }
 

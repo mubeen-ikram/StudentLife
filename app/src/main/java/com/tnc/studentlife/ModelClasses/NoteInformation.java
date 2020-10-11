@@ -1,8 +1,9 @@
 package com.tnc.studentlife.ModelClasses;
 
+
 import java.io.Serializable;
 
-public class NoteInformation implements Serializable {
+public class NoteInformation implements Serializable,Cloneable {
     private String notesData;
     private int verticalPosition=-1;
     private int horizontalPosition=-1;
@@ -40,5 +41,9 @@ public class NoteInformation implements Serializable {
 
     public void setShow(boolean show) {
         isShow = show;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

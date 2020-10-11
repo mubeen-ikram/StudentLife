@@ -60,6 +60,15 @@ public class CompleteNotes implements Serializable {
         getAllInternalChild(parentNode,childNotes);
         return childNotes;
     }
+    public boolean checkChildHasNote(NoteInformation parentNode,NoteInformation childNote){
+        ArrayList<NoteInformation> childNotes=new ArrayList<>();
+        getAllInternalChild(parentNode,childNotes);
+        for(NoteInformation note:childNotes){
+            if (note.getVerticalPosition()==childNote.getVerticalPosition())
+                return true;
+        }
+        return false;
+    }
 
     private void getAllInternalChild(NoteInformation parentNode, ArrayList<NoteInformation> childNotes) {
         for(NoteInformation note:this.getChild(parentNode)) {
@@ -78,6 +87,15 @@ public class CompleteNotes implements Serializable {
 
     public void setCurrentNotes(ArrayList<NoteInformation> currentNotes) {
         this.currentNotes = currentNotes;
+    }
+
+
+    public NoteInformation getCurrentId(int verticalPosition){
+        for (NoteInformation note:currentNotes){
+            if(note.getVerticalPosition()==verticalPosition)
+                return note;
+        }
+        return null;
     }
 
 
