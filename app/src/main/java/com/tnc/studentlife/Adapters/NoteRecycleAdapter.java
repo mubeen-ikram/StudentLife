@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,21 +121,21 @@ public class NoteRecycleAdapter extends RecyclerView.Adapter<NoteRecycleAdapter.
                     }
                 }
             });
-//            holder.noteDataET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-////                @Override
-////                public void onFocusChange(View view, boolean b) {
-////                    if (!b) {
-////                        holder.deleteNote.setVisibility(View.INVISIBLE);
-////                    } else {
-//////                        context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-//////                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-//////                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-////                        view.requestFocus();
-////                        holder.deleteNote.setVisibility(View.VISIBLE);
-////
-////                    }
-////                }
-////            });
+            holder.noteDataET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean b) {
+                    if (!b) {
+                        holder.deleteNote.setVisibility(View.INVISIBLE);
+                    } else {
+//                        context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//                        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+//                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                        view.requestFocus();
+                        holder.deleteNote.setVisibility(View.VISIBLE);
+
+                    }
+                }
+            });
 
 
             holder.noteDataET.setOnKeyListener(new View.OnKeyListener() {
@@ -249,8 +250,8 @@ public class NoteRecycleAdapter extends RecyclerView.Adapter<NoteRecycleAdapter.
     @Override
     public void itemDrag(int fromIndex, int toIndex) {
         //check k jis index pe ja rhy uski kia position hai
-        if(fromIndex>=notes.size()&&notes.size()<=toIndex)return;
-        if (!SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getAllChild(notes.get(fromIndex)).contains(notes.get(toIndex))) {
+        if(fromIndex>=mainArray.size()&&mainArray.size()<=toIndex)return;
+        if (!SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getAllChild(mainArray.get(fromIndex)).contains(mainArray.get(toIndex))) {
             //For movement from bottom to top
             //1.Get currentNode that needed to move and all its child
             //2.Delete the node and child from main notes list
@@ -259,15 +260,15 @@ public class NoteRecycleAdapter extends RecyclerView.Adapter<NoteRecycleAdapter.
             //5.Set the horizontal position of the note+child array
             //5.Add these notes to respective place
             //step4 start
-            int positionToHorizontal=notes.get(toIndex).getHorizontalPosition();
+            int positionToHorizontal=mainArray.get(toIndex).getHorizontalPosition();
             //step4 end
             // Step1 start
             ArrayList<NoteInformation> notesFamilyToChange = new ArrayList<>();
-            notesFamilyToChange.add(notes.get(fromIndex));
-            notesFamilyToChange.addAll(SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getAllChild(notes.get(fromIndex)));
+            notesFamilyToChange.add(mainArray.get(fromIndex));
+            notesFamilyToChange.addAll(SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getAllChild(mainArray.get(fromIndex)));
             //Step1 End
             //Step2 start
-            checkToDeleteChild(notes.get(fromIndex));
+            checkToDeleteChild(mainArray.get(fromIndex));
             deleteRemove();
             SData.getUserInformation().getCurrentCourses().get(SData.getCurrentCourse()).getNotes().getCurrentNotes().remove(notesFamilyToChange.get(0));
             //Step2 end
@@ -302,15 +303,16 @@ public class NoteRecycleAdapter extends RecyclerView.Adapter<NoteRecycleAdapter.
 
     @Override
     public void onItemSwiped(int position, int direction) {
+        Log.d("NotesREcyler", "onItemSwiped: "+notes.size());
         if (position != 0) {
             if (direction == ItemTouchHelper.END) {
-                if (notes.get(position - 1).getHorizontalPosition() >= notes.get(position).getHorizontalPosition()) {
-                    increaseChildNotesNewHorizontalPlace(notes.get(position));
+                if (mainArray.get(position - 1).getHorizontalPosition() >= mainArray.get(position).getHorizontalPosition()) {
+                    increaseChildNotesNewHorizontalPlace(mainArray.get(position));
                     mainArray.get(position).setHorizontalPosition(mainArray.get(position).getHorizontalPosition()+1);
                 }
             } else if (direction == ItemTouchHelper.START) {
-                if (notes.get(position).getHorizontalPosition() != 0) {
-                    decreaseChildNotesNewHorizontalPlace(notes.get(position));
+                if (mainArray.get(position).getHorizontalPosition() != 0) {
+                    decreaseChildNotesNewHorizontalPlace(mainArray.get(position));
                     mainArray.get(position).setHorizontalPosition(mainArray.get(position).getHorizontalPosition()-1);
                 }
             }

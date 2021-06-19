@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class CompleteNotes implements Serializable {
     private ArrayList<NoteInformation> currentNotes=new ArrayList<>();
-    //Different method on these notes
-
+//    Different method on these notes
+      
     public boolean addNote(NoteInformation noteInformation){
         if (noteInformation.getVerticalPosition()==-1){
             noteInformation.setHorizontalPosition(0);
